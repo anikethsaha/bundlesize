@@ -16,7 +16,7 @@ program
   .option('--debug', 'run in debug mode')
   .option(
     '-c, --compression [compression]',
-    'specify which compression algorithm to use'
+    'specify which compression algorithm to use (gzip)'
   )
   .parse(process.argv)
 
@@ -30,6 +30,16 @@ if (program.files) {
       compression: program.compression || 'gzip'
     }
   ]
+} else {
+  if (!packageJSONconfig) {
+    cliConfig = [
+      {
+        path: 'dist/*.js',
+        maxSize: '3kB',
+        compression: 'gzip'
+      }
+    ]
+  }
 }
 
 /* Send to readme if no configuration is provided */
